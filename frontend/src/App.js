@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
+import {getAllMessageURL, postMessageURL} from './utils/CommonConst';
 
 class App extends Component {
 
@@ -18,7 +19,7 @@ class App extends Component {
     }
 
     getShakas() {
-      axios.get('http://localhost:8000/api/v1/shakas/')
+      axios.get(getAllMessageURL)
         .then(res => {
           this.setState({ shakas: res.data });
           console.log(res.data)
@@ -29,7 +30,7 @@ class App extends Component {
     }
 
     postShakas(){
-      axios.post('http://localhost:8000/api/v1/shakas/', {
+      axios.post(postMessageURL, {
         "message" : "テストメッセージ",
         "point" : 30
       })
