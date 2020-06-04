@@ -1,16 +1,9 @@
 from rest_framework import generics
 from .models import Shaka
 from .serializers import ShakaSerializer
+from rest_framework import viewsets
 
 
-class ListShaka(generics.ListAPIView):
-    queryset = Shaka.objects.all()
-    serializer_class = ShakaSerializer
-
-class CreateShaka(generics.CreateAPIView):
-    queryset = Shaka.objects.all()
-    serializer_class = ShakaSerializer
-
-class DetailShaka(generics.RetrieveAPIView):
+class ShakaViewSet(viewsets.ModelViewSet):
     queryset = Shaka.objects.all()
     serializer_class = ShakaSerializer

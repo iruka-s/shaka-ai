@@ -18,7 +18,7 @@ class App extends Component {
     }
 
     getShakas() {
-      axios.get('http://localhost:8000/api/list/')
+      axios.get('http://localhost:8000/api/v1/shakas/')
         .then(res => {
           this.setState({ shakas: res.data });
           console.log(res.data)
@@ -29,7 +29,7 @@ class App extends Component {
     }
 
     postShakas(){
-      axios.post('http://localhost:8000/api/create/', {
+      axios.post('http://localhost:8000/api/v1/shakas/', {
         "message" : "テストメッセージ",
         "point" : 30
       })

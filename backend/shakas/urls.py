@@ -1,9 +1,9 @@
 from django.urls import path
+from rest_framework import routers
 
-from .views import ListShaka, CreateShaka, DetailShaka
+from .views import ShakaViewSet
 
-urlpatterns = [
-    path('<int:pk>/', DetailShaka.as_view()),
-    path('list/', ListShaka.as_view()),
-    path('create/', CreateShaka.as_view()),
-]
+router = routers.DefaultRouter()
+router.register(r'shakas', ShakaViewSet)
+
+urlpatterns = router.urls
