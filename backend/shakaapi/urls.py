@@ -14,9 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.conf.urls import include, url
+from django.conf import settings
+from django.contrib.staticfiles.urls import static, staticfiles_urlpatterns
+
+from shakas.urls import router as shaka_router
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/v1/', include('shakas.urls')),
+    url(r'^admin/', admin.site.urls),
+    url(r'^api/v1/', include(shaka_router.urls)),
 ]

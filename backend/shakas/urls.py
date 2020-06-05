@@ -5,5 +5,3 @@ from .views import ShakaViewSet
 
 router = routers.DefaultRouter()
 router.register(r'shakas', ShakaViewSet)
-
-urlpatterns = router.urls

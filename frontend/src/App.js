@@ -30,11 +30,14 @@ class App extends Component {
     }
 
     postShakas(){
-      axios.post(postMessageURL, {
-        "message" : "テストメッセージ",
-        "point" : 30
+      // var convert = Object.assign({}, {message : 'テストメッセージ', point : 30})
+      
+      var params = new URLSearchParams();
+      params.append('message', 'うまくいってください');
+      axios.post(postMessageURL, params)
+      .then(response => {
+        console.log(response.data)
       })
-      .then(response=>{console.log(response.data)})
     }
     
 
@@ -42,7 +45,7 @@ class App extends Component {
       return (
         <div>
           {this.state.shakas.map(item => (
-            <div key={item.id}>
+            <div>
               <h1>{item.message}</h1>
               <p>{item.point}</p>
             </div>
