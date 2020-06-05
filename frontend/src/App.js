@@ -30,10 +30,8 @@ class App extends Component {
     }
 
     postShakas(){
-      // var convert = Object.assign({}, {message : 'テストメッセージ', point : 30})
-      
       var params = new URLSearchParams();
-      params.append('message', 'うまくいってください');
+      params.append('message', '私は昨日犯罪を犯しました');
       axios.post(postMessageURL, params)
       .then(response => {
         console.log(response.data)

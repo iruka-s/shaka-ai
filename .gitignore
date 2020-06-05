@@ -1,2 +1,6 @@
 resource/zenaku.json
 resource/fasttext_wiki_20200503.bin
+backend/shakas/resource/fasttext_wiki_20200503.bin
+backend/shakas/resource/zenaku.json
+temp/resource/fasttext_wiki_20200503.bin
+temp/resource/zenaku.json
