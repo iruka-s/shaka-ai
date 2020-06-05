@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Button from '@material-ui/core/Button';
+
+import ShakaDrawer from './utils/ShakaDrawer'
 import {getAllMessageURL, postMessageURL} from './utils/CommonConst';
 
 class App extends Component {
@@ -8,20 +9,20 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      shakas: []
+      dbResults: []
     };
-    this.getShakas = this.getShakas.bind(this);
-    this.postShakas = this.postShakas.bind(this);
+    this.getDBResults = this.getDBResults.bind(this);
+    this.postMessage = this.postMessage.bind(this);
   }
 
     componentDidMount() {
-        this.getShakas();
+        this.getDBResults();
     }
 
-    getShakas() {
+    getDBResults() {
       axios.get(getAllMessageURL)
         .then(res => {
-          this.setState({ shakas: res.data });
+          this.setState({ dbResults: res.data });
           console.log(res.data)
         })
         .catch(err => {
@@ -29,7 +30,7 @@ class App extends Component {
         });
     }
 
-    postShakas(){
+    postMessage(){
       var params = new URLSearchParams();
       params.append('message', '私は昨日犯罪を犯しました');
       axios.post(postMessageURL, params)
@@ -41,22 +42,10 @@ class App extends Component {
 
     render() {
       return (
-        <div>
-          {this.state.shakas.map(item => (
-            <div>
-              <h1>{item.message}</h1>
-              <p>{item.point}</p>
-            </div>
-          ))}
-
-          <Button 
-            variant="contained" 
-            color="secondary"
-            onClick={this.postShakas}
-          >
-              Hello World!
-          </Button>
-        </div>
+        <ShakaDrawer
+          dbResults={this.state.dbResults}
+          postMessage={this.postMessage}
+      />
         );
     }
 }
