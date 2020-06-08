@@ -1,5 +1,6 @@
 import React from 'react';
-import { Grid, TextField, Button, Card, CardActionArea, CardContent, CardMedia, Typography } from '@material-ui/core';
+import { Grid, TextField, Button, Card, CardActionArea,
+  CardContent, CardMedia, Typography, Table, TableBody, TableCell, TableRow } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 const shakaImage = require('../resources/shaka.jpg');
@@ -7,8 +8,14 @@ const shakaImage = require('../resources/shaka.jpg');
 
 // inputValueの初期値はワークスに応じて変わる必要がある
 const styles = theme => ({
+  table: {
+    maxWidth:800
+  },
   nextLifeTitle: {
     marginLeft: 'auto',
+  },
+  totalPointText: {
+    marginTop: 160,
   },
 });
 
@@ -17,7 +24,30 @@ class MainView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      sendMessage: "",
     };
+    this.handleToSendMessage = this.handleToSendMessage.bind(this);
+    this.handleToSendButton = this.handleToSendButton.bind(this);
+    this.calcTotalPoint = this.calcTotalPoint.bind(this);
+  }
+
+  handleToSendMessage(value){
+    this.setState({ sendMessage: value })
+  }
+
+  handleToSendButton(){
+    this.props.postMessage(this.state.sendMessage)
+    this.setState({ sendMessage: "" })
+  }
+
+  calcTotalPoint() {
+    
+    let totalFloatPoint = 0;
+
+    for(var index in  this.props.dbResults) {
+      totalFloatPoint = totalFloatPoint + this.props.dbResults[index].point;
+    }
+    return(Math.floor(totalFloatPoint))
   }
 
   render() {
@@ -58,7 +88,12 @@ class MainView extends React.Component {
               </CardActionArea>
             </Card>
           </Grid>
-          <Grid item xs={5} />
+          <Grid item xs={2}>
+            <Typography className={classes.totalPointText} variant="h5" component="h2" align="left">
+              合計点数：{this.calcTotalPoint()}
+            </Typography>
+          </Grid>
+          <Grid item xs={3} />
 
           {/* メッセージ送信部 */}
           <Grid item xs={2} />
@@ -67,15 +102,15 @@ class MainView extends React.Component {
               fullWidth
               id="message"
               label="送信メッセージ"
-              // value={this.props.name}
-              // onChange={(e) => this.props.addSelectName(e.target.value)}
+              value={this.state.sendMessage}
+              onChange={(e) => this.handleToSendMessage(e.target.value)}
             />
           </Grid>
           <Grid item xs={1}>
             <Button
               variant="contained" 
               color="primary"
-              onClick={this.props.postMessage}
+              onClick={this.handleToSendButton}
               className={classes.sendButton}
             >
               送信
@@ -85,20 +120,21 @@ class MainView extends React.Component {
         </Grid>
 
         {/* メッセージ+点数一覧表示 */}
-        {this.props.dbResults.map(item => (
-          <div>
-            <h1>{item.message}</h1>
-            <p>{item.point}</p>
-          </div>
-        ))}
+        <Grid container alignItems="center" justify="center">
+          <Table className={classes.table} aria-label="simple table">
+            <TableBody>
+              {this.props.dbResults.reverse().map((item) => (
+                <TableRow key={item.name}>
+                  <TableCell component="th" scope="row">
+                    {item.message}
+                  </TableCell>
+                  <TableCell align="right">{item.point}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Grid>
 
-        <Button 
-          variant="contained" 
-          color="secondary"
-          onClick={this.props.postMessage}
-        >
-            Hello World!
-        </Button>
       </div>
     );
   }

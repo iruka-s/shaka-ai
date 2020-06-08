@@ -23,20 +23,22 @@ class App extends Component {
       axios.get(getAllMessageURL)
         .then(res => {
           this.setState({ dbResults: res.data });
-          console.log(res.data)
         })
         .catch(err => {
           console.log(err);
         });
     }
 
-    postMessage(){
+    postMessage(sendMessage){
       var params = new URLSearchParams();
-      params.append('message', '私は昨日犯罪を犯しました');
+      params.append('message', sendMessage);
+
       axios.post(postMessageURL, params)
       .then(response => {
-        console.log(response.data)
+        this.getDBResults()
       })
+
+      
     }
     
 

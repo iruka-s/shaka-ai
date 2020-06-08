@@ -5,9 +5,10 @@ import codecs
 import CaboCha
 
 # ファイルパス定義
-zen_aku_dic_path = "../resource/zenaku.json"
-hinsi_list_path = "../resource/pos-id.def"
-fasttext_corps_path = "../resource/fasttext_wiki_20200503.bin"
+zen_aku_dic_path = './shakas/resource/zenaku.json'
+hinsi_list_path = './shakas/resource/pos-id.def'
+fasttext_corps_path = './shakas/resource/fasttext_wiki_20200503.bin'
+
 
 # 7つの大罪
 bad_noun_list = [('傲慢', -100), ('強欲', -100), ('嫉妬', -100), ('憤怒', -100), ('色欲', -100), ('暴食', -100), ('怠惰', -100)]
