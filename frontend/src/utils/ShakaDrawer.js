@@ -4,7 +4,7 @@ import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import MainView from '../components/MainView';
-
+import LoginView from '../components/LoginView';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -48,7 +48,7 @@ export default function ShakaDrawer(props) {
       <main className={classes.content}>
         <div/>
 
-        <MainView
+        <LoginView
           dbResults={props.dbResults}
           postMessage={props.postMessage}
         />
