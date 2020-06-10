@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 import ShakaDrawer from './utils/ShakaDrawer'
+import { BrowserRouter as Router } from 'react-router-dom';
 import {getAllMessageURL, postMessageURL} from './utils/CommonConst';
 
 class App extends Component {
@@ -44,11 +45,13 @@ class App extends Component {
 
     render() {
       return (
+      <Router>
         <ShakaDrawer
           dbResults={this.state.dbResults}
           postMessage={this.postMessage}
-      />
-        );
+        />
+      </Router>
+      );
     }
 }
 

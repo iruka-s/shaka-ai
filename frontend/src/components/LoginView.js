@@ -1,6 +1,9 @@
 import { Box, Button, Card, List, ListItem, TextField } from '@material-ui/core';
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import React from 'react';
+import { withRouter } from 'react-router-dom';
+
+import { ScreenPath, } from '../utils/CommonConst';
 
 class LoginView extends React.Component {
 
@@ -23,6 +26,10 @@ class LoginView extends React.Component {
         [name]: value
     });
 }
+
+  handleToLoginButton = (event) => {
+
+  };
 
   render() {
     return (
@@ -76,6 +83,7 @@ class LoginView extends React.Component {
                 variant='contained'
                 color='primary'
                 fullWidth
+                onClick={() => this.props.handleToPage(ScreenPath.MAIN.id)}
                 style={{ marginTop: 20 }}
             >
               Login
@@ -89,4 +97,4 @@ class LoginView extends React.Component {
 
 }
 
-export default LoginView;
+export default withRouter(LoginView);

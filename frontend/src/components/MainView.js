@@ -2,6 +2,7 @@ import React from 'react';
 import { Grid, TextField, Button, Card, CardActionArea,
   CardContent, CardMedia, Typography, Table, TableBody, TableCell, TableRow } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import { withRouter } from 'react-router-dom';
 
 const shakaImage = require('../resources/shaka.jpg');
 
@@ -140,4 +141,4 @@ class MainView extends React.Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(MainView);
+export default withRouter(withStyles(styles, { withTheme: true })(MainView));
