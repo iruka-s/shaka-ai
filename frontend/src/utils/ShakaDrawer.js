@@ -8,7 +8,7 @@ import axios from 'axios';
 
 import MainView from '../components/MainView';
 import LoginView from '../components/LoginView';
-import { ScreenPath, getAllMessageURL, postMessageURL } from '../utils/CommonConst';
+import { ScreenPath, apiURLs } from '../utils/CommonConst';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -34,7 +34,7 @@ export default function ShakaDrawer(props) {
   const classes = useStyles();
   const { history } = useReactRouter();
 
-  const [token, setToken] = React.useState(); 
+  const [token, setToken] = React.useState(""); 
   const [dbResults, setDBResults] = React.useState([]); 
 
 
@@ -45,12 +45,12 @@ export default function ShakaDrawer(props) {
     params.append('email', email);
     params.append('password', password);
 
-    axios.post('http://localhost:8000/api/v1/rest-auth/login/', params)
+    axios.post(apiURLs.LOGIN, params)
     .then(response => {
 
       console.log(response.data.key)
       setToken(response.data.key);
-      handleToPage(ScreenPath.MAIN.id);
+      handleToMainPage();
 
     })
     .catch(err => {
@@ -60,7 +60,7 @@ export default function ShakaDrawer(props) {
 
   const getDBResults = () => {
 
-    axios.get(getAllMessageURL, {
+    axios.get(apiURLs.GETDBRESULTS, {
       headers: {
         'Authorization': `Token ${token}`,
       }
@@ -79,7 +79,7 @@ export default function ShakaDrawer(props) {
     var params = new URLSearchParams();
     params.append('message', sendMessage);
 
-    axios.post(postMessageURL, params, {
+    axios.post(apiURLs.POSTMESSAGE, params, {
       headers: {
         'Authorization': `Token ${token}`,
       }
@@ -90,20 +90,12 @@ export default function ShakaDrawer(props) {
 
   }
 
-  const handleToPage = (moveToPage) => {
+  const handleToMainPage = () => {
+    history.push(ScreenPath.MAIN.path);
+  }
 
-    switch (moveToPage){
-      case ScreenPath.LOGIN.id:
-        history.push(ScreenPath.LOGIN.path);
-        break;
-
-      case ScreenPath.MAIN.id:
-        history.push(ScreenPath.MAIN.path);
-        break;
-
-      default:
-        break;
-    }
+  const handleToLoginPage = () => {
+    history.push(ScreenPath.LOGIN.path);
   }
 
   return (
@@ -129,9 +121,8 @@ export default function ShakaDrawer(props) {
             exact
             path={ScreenPath.LOGIN.path}
             render={() => <LoginView
-              // dbResults={props.dbResults}
               postLogin={postLogin}
-              handleToPage={handleToPage}
+              handleToMainPage={handleToMainPage}
             />}
           />
           <Route
@@ -141,6 +132,8 @@ export default function ShakaDrawer(props) {
               dbResults={dbResults}
               getDBResults={getDBResults}
               postMessage={postMessage}
+              token={token}
+              handleToLoginPage={handleToLoginPage}
             />}
           />
         </Switch>
