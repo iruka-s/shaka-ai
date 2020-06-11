@@ -5,6 +5,7 @@ export const ScreenPath = {
 
 export const apiURLs = {
   LOGIN: 'http://localhost:8000/api/v1/rest-auth/login/',
+  LOGOUT: 'http://localhost:8000/api/v1/rest-auth/logout/',
   GETDBRESULTS: 'http://localhost:8000/api/v1/shakas/get_user_result/',
   POSTMESSAGE: 'http://localhost:8000/api/v1/shakas/set_point/',
 }

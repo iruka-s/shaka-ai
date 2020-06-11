@@ -1,6 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
-import { AppBar, Toolbar, Typography } from '@material-ui/core';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { AppBar, Toolbar, Typography, Tooltip, IconButton } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Route, Switch } from "react-router-dom";
 import useReactRouter from 'use-react-router';
@@ -48,9 +49,27 @@ export default function ShakaDrawer(props) {
     axios.post(apiURLs.LOGIN, params)
     .then(response => {
 
-      console.log(response.data.key)
       setToken(response.data.key);
       handleToMainPage();
+
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }
+
+  const postLogout = () => {
+
+    axios.post(apiURLs.LOGOUT, {
+      headers: {
+        'Authorization': `Token ${token}`,
+      }
+    })
+    .then(response => {
+
+      setToken("");
+      setDBResults([]);
+      handleToLoginPage();
 
     })
     .catch(err => {
@@ -71,7 +90,6 @@ export default function ShakaDrawer(props) {
       .catch(err => {
         console.log(err);
       });
-
   }
 
   const postMessage = (sendMessage) => {
@@ -87,7 +105,6 @@ export default function ShakaDrawer(props) {
     .then(response => {
       getDBResults()
     })
-
   }
 
   const handleToMainPage = () => {
@@ -109,6 +126,22 @@ export default function ShakaDrawer(props) {
           <Typography variant="h6" className={classes.title}>
             釈迦AI
           </Typography>
+
+          {(token !== "" ) ? 
+            <Tooltip title="ログアウト">
+              <IconButton 
+                color="inherit" 
+                aria-label="logout" 
+                component="span"
+                onClick={postLogout}
+              >
+                <ExitToAppIcon />
+              </IconButton>
+            </Tooltip>
+            : 
+            <div/>
+          }
+
         </Toolbar>
       </AppBar>
 
