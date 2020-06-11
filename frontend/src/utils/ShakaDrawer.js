@@ -54,7 +54,7 @@ export default function ShakaDrawer(props) {
 
     })
     .catch(err => {
-      console.log(err);
+      alert("ログインに失敗しました");
     });
   }
 
