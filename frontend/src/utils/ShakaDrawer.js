@@ -10,6 +10,7 @@ import axios from 'axios';
 import MainView from '../components/MainView';
 import LoginView from '../components/LoginView';
 import { ScreenPath, apiURLs } from '../utils/CommonConst';
+import { alertMessages, componentLabelNames } from '../utils/MassageConst';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -54,7 +55,7 @@ export default function ShakaDrawer(props) {
 
     })
     .catch(err => {
-      alert("ログインに失敗しました");
+      alert(alertMessages.FAILEDLOGIN);
     });
   }
 
@@ -124,11 +125,11 @@ export default function ShakaDrawer(props) {
       >
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            釈迦AI
+            {componentLabelNames.APPTITLE}
           </Typography>
 
           {(token !== "" ) ? 
-            <Tooltip title="ログアウト">
+            <Tooltip title={componentLabelNames.LOGOUTBUTTON}>
               <IconButton 
                 color="inherit" 
                 aria-label="logout" 

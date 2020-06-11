@@ -4,6 +4,8 @@ import { Grid, TextField, Button, Card, CardActionArea,
 import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom';
 
+import { componentLabelNames } from '../utils/MassageConst';
+
 const shakaImage = require('../resources/shaka.jpg');
 
 
@@ -73,7 +75,7 @@ class MainView extends React.Component {
           {/* 来世の姿を表示 */}
           <Grid item xs={5}>
             <Typography variant="h5" component="h2" align="right">
-              あなたの来世
+              {componentLabelNames.NEXTLIFE}
             </Typography>
           </Grid>
           <Grid item xs={2}>
@@ -99,7 +101,7 @@ class MainView extends React.Component {
           </Grid>
           <Grid item xs={5}>
             <Typography className={classes.totalPointText} variant="h5" component="h2" align="left">
-              合計点数：{this.calcTotalPoint()}
+              {componentLabelNames.TOTALPOINT}{this.calcTotalPoint()}
             </Typography>
           </Grid>
 
@@ -109,7 +111,7 @@ class MainView extends React.Component {
             <TextField
               fullWidth
               id="message"
-              label="送信メッセージ"
+              label={componentLabelNames.SENDMESSAGE}
               value={this.state.sendMessage}
               onChange={(e) => this.handleToSendMessage(e.target.value)}
             />
@@ -121,7 +123,7 @@ class MainView extends React.Component {
               onClick={this.handleToSendButton}
               className={classes.sendButton}
             >
-              送信
+              {componentLabelNames.SENDBUTTON}
             </Button>
           </Grid>
           <Grid item xs={3} />          

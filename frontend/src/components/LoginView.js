@@ -3,6 +3,8 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
+import { componentLabelNames } from '../utils/MassageConst';
+
 class LoginView extends React.Component {
 
   constructor(props) {
@@ -38,7 +40,7 @@ class LoginView extends React.Component {
           <ListItem>
               <TextField
                 type='text'
-                label='User name'
+                label={componentLabelNames.USERNAME}
                 name='username'
                 value={this.state.username}
                 onChange={this.handleInputChange}
@@ -51,7 +53,7 @@ class LoginView extends React.Component {
             <ListItem>
               <TextField
                 type='mail'
-                label='Email'
+                label={componentLabelNames.EMAIL}
                 name='email'
                 value={this.state.email}
                 onChange={this.handleInputChange}
@@ -64,7 +66,7 @@ class LoginView extends React.Component {
             <ListItem>
               <TextField
                 type='password'
-                label='Password'
+                label={componentLabelNames.PASSWORD}
                 name='password'
                 value={this.state.password}
                 onChange={this.handleInputChange}
@@ -83,7 +85,7 @@ class LoginView extends React.Component {
               onClick={this.handleToLoginButton}
               style={{ marginTop: 20 }}
           >
-            Login
+            {componentLabelNames.LOGINBUTTON}
           </Button>
 
         </Box>
