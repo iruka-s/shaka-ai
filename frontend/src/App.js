@@ -17,7 +17,7 @@ class App extends Component {
   }
 
     componentDidMount() {
-        this.getDBResults();
+        this.postLogin();
     }
 
     getDBResults() {
@@ -39,7 +39,19 @@ class App extends Component {
         this.getDBResults()
       })
 
-      
+    }
+
+    postLogin() {
+      var params = new URLSearchParams();
+      params.append('username', 'iruka1');
+      params.append('email', 'iruka1@gmail.com');
+      params.append('password', 'iruka11');
+
+      axios.post('http://localhost:8000/api/v1/rest-auth/login/', params)
+      .then(response => {
+        console.log(response)
+        // this.getPosts(response.data.key)
+      })
     }
     
 

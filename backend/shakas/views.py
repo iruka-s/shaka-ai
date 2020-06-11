@@ -1,10 +1,11 @@
 from rest_framework import generics
 from .models import Shaka
-from .serializers import ShakaSerializer
+from .serializers import ShakaSerializer, UserSerializer
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from .utils import fasttext_exec
+from django.contrib.auth import get_user_model
 
 
 class ShakaViewSet(viewsets.ModelViewSet):
@@ -29,3 +30,7 @@ class ShakaViewSet(viewsets.ModelViewSet):
             return Response(shaka_result.data)
         
         return Response(shaka_result.error)
+
+class UserViewset(viewsets.ModelViewSet):
+    queryset = get_user_model().objects.all()
+    serializer_class = UserSerializer

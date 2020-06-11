@@ -1,7 +1,10 @@
 from django.urls import path
-from rest_framework import routers
+from rest_framework.routers import SimpleRouter
 
-from .views import ShakaViewSet
+from .views import UserViewset, ShakaViewSet
 
-router = routers.DefaultRouter()
+router = SimpleRouter()
+router.register('users', UserViewset, basename='users')
 router.register(r'shakas', ShakaViewSet)
+
+urlpatterns = router.urls
