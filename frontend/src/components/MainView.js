@@ -33,7 +33,12 @@ class MainView extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getDBResults()
+    if (this.props.token !== "") {
+      this.props.getDBResults();
+    } else {
+      this.props.handleToLoginPage();
+    }
+    
   }
 
   handleToSendMessage(value){
@@ -66,8 +71,7 @@ class MainView extends React.Component {
           <Grid item xs={12} />
           
           {/* 来世の姿を表示 */}
-          <Grid item xs={3} />
-          <Grid item xs={2}>
+          <Grid item xs={5}>
             <Typography variant="h5" component="h2" align="right">
               あなたの来世
             </Typography>
@@ -93,12 +97,11 @@ class MainView extends React.Component {
               </CardActionArea>
             </Card>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={5}>
             <Typography className={classes.totalPointText} variant="h5" component="h2" align="left">
               合計点数：{this.calcTotalPoint()}
             </Typography>
           </Grid>
-          <Grid item xs={3} />
 
           {/* メッセージ送信部 */}
           <Grid item xs={2} />
