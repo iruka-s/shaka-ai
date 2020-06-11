@@ -32,6 +32,10 @@ class MainView extends React.Component {
     this.calcTotalPoint = this.calcTotalPoint.bind(this);
   }
 
+  componentDidMount() {
+    this.props.getDBResults()
+  }
+
   handleToSendMessage(value){
     this.setState({ sendMessage: value })
   }

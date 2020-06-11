@@ -3,14 +3,12 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-import { ScreenPath, } from '../utils/CommonConst';
-
 class LoginView extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      userName: '',
+      username: '',
       email: '',
       password: '',
     };
@@ -28,67 +26,65 @@ class LoginView extends React.Component {
 }
 
   handleToLoginButton = (event) => {
-
+    this.props.postLogin(this.state.username, this.state.email, this.state.password)
   };
 
   render() {
     return (
       <Card>
         <Box p={5} textAlign='center'>
-          <form onSubmit={this.handleSubmit}>
-            <AccountCircle fontSize='large' />
-            <List>
-            <ListItem>
-                <TextField
-                  type='text'
-                  label='User name'
-                  name='userName'
-                  value={this.state.userName}
-                  onChange={this.handleInputChange}
-                  margin='normal'
-                  variant='outlined'
-                  fullWidth
-                  required
-                />
-              </ListItem>
-              <ListItem>
-                <TextField
-                  type='mail'
-                  label='Email'
-                  name='email'
-                  value={this.state.email}
-                  onChange={this.handleInputChange}
-                  margin='normal'
-                  variant='outlined'
-                  fullWidth
-                  required
-                />
-              </ListItem>
-              <ListItem>
-                <TextField
-                  type='password'
-                  label='Password'
-                  name='password'
-                  value={this.state.password}
-                  onChange={this.handleInputChange}
-                  margin='normal'
-                  variant='outlined'
-                  fullWidth
-                  required
-                />
-              </ListItem>
-            </List>
-            <Button
-                type='submit'
-                variant='contained'
-                color='primary'
+          <AccountCircle fontSize='large' />
+          <List>
+          <ListItem>
+              <TextField
+                type='text'
+                label='User name'
+                name='username'
+                value={this.state.username}
+                onChange={this.handleInputChange}
+                margin='normal'
+                variant='outlined'
                 fullWidth
-                onClick={() => this.props.handleToPage(ScreenPath.MAIN.id)}
-                style={{ marginTop: 20 }}
-            >
-              Login
-            </Button>
-          </form>
+                required
+              />
+            </ListItem>
+            <ListItem>
+              <TextField
+                type='mail'
+                label='Email'
+                name='email'
+                value={this.state.email}
+                onChange={this.handleInputChange}
+                margin='normal'
+                variant='outlined'
+                fullWidth
+                required
+              />
+            </ListItem>
+            <ListItem>
+              <TextField
+                type='password'
+                label='Password'
+                name='password'
+                value={this.state.password}
+                onChange={this.handleInputChange}
+                margin='normal'
+                variant='outlined'
+                fullWidth
+                required
+              />
+            </ListItem>
+          </List>
+          <Button
+              type='submit'
+              variant='contained'
+              color='primary'
+              fullWidth
+              onClick={this.handleToLoginButton}
+              style={{ marginTop: 20 }}
+          >
+            Login
+          </Button>
 
         </Box>
       </Card>

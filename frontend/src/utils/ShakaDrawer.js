@@ -4,10 +4,11 @@ import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Route, Switch } from "react-router-dom";
 import useReactRouter from 'use-react-router';
+import axios from 'axios';
 
 import MainView from '../components/MainView';
 import LoginView from '../components/LoginView';
-import { ScreenPath, } from '../utils/CommonConst';
+import { ScreenPath, getAllMessageURL, postMessageURL } from '../utils/CommonConst';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -32,6 +33,62 @@ export default function ShakaDrawer(props) {
 
   const classes = useStyles();
   const { history } = useReactRouter();
+
+  const [token, setToken] = React.useState(); 
+  const [dbResults, setDBResults] = React.useState([]); 
+
+
+  const postLogin = (username, email, password) => {
+
+    var params = new URLSearchParams();
+    params.append('username', username);
+    params.append('email', email);
+    params.append('password', password);
+
+    axios.post('http://localhost:8000/api/v1/rest-auth/login/', params)
+    .then(response => {
+
+      console.log(response.data.key)
+      setToken(response.data.key);
+      handleToPage(ScreenPath.MAIN.id);
+
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }
+
+  const getDBResults = () => {
+
+    axios.get(getAllMessageURL, {
+      headers: {
+        'Authorization': `Token ${token}`,
+      }
+    })
+      .then(res => {
+        setDBResults(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+  }
+
+  const postMessage = (sendMessage) => {
+
+    var params = new URLSearchParams();
+    params.append('message', sendMessage);
+
+    axios.post(postMessageURL, params, {
+      headers: {
+        'Authorization': `Token ${token}`,
+      }
+    })
+    .then(response => {
+      getDBResults()
+    })
+
+  }
 
   const handleToPage = (moveToPage) => {
 
@@ -73,7 +130,7 @@ export default function ShakaDrawer(props) {
             path={ScreenPath.LOGIN.path}
             render={() => <LoginView
               // dbResults={props.dbResults}
-              // postMessage={props.postMessage}
+              postLogin={postLogin}
               handleToPage={handleToPage}
             />}
           />
@@ -81,8 +138,9 @@ export default function ShakaDrawer(props) {
             exact
             path={ScreenPath.MAIN.path}
             render={() => <MainView
-              dbResults={props.dbResults}
-              postMessage={props.postMessage}
+              dbResults={dbResults}
+              getDBResults={getDBResults}
+              postMessage={postMessage}
             />}
           />
         </Switch>
