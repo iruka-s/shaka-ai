@@ -1,0 +1,1 @@
+docker run -it -v C:\Users\iruka\py_workspace\shaka-ai:/home/ shaka-backend
