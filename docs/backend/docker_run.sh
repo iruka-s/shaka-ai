@@ -1,1 +1,1 @@
-docker run -it -v C:\Users\iruka\py_workspace\shaka-ai:/home/ shaka-backend
+sudo docker run --gpus 1  --privileged --device /dev/snd --group-add audio --net host -e DISPLAY=$DISPLAY -v /tmp/.X11-unix/:/tmp.X11-unix -it -v $(pwd):/home shaka-backend
