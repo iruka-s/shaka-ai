@@ -3,7 +3,7 @@
 
 入力された日本語文の善悪を判断して点数付けするシステム。点数は加算され、自分がこれまでにどれだけの徳を積んでいるかを知ることができる。
 
-## Description
+## アプリについて
 以下の機能からなる。
 
 ### 【mecabによる構文解析、形態素解析】
@@ -61,11 +61,14 @@ https://taku910.github.io/mecab/posid.html
 文節内に「なかっ」のような否定の助動詞を含む場合、「さぼらなかった。」という文節、及びその文節の子文節である「私は」の文節の点数の正負を反転させて計算する。
     
 
-## Requirement
-TODO:write this.  
-https://deeeet.com/writing/2014/07/31/readme/
+## Djangoサーバの起動
 
-## Usage
+Dockerコンテナ作成後、下記コマンドを実行する。
+```
+python3 manage.py runserver 0.0.0.0:8000
+```
+
+## Reactサーバの起動
 TODO:write this.  
 
 

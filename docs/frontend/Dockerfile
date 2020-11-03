@@ -12,5 +12,5 @@ RUN apt install -y curl make gcc g++
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - && \
     apt install -y nodejs && \
     npm cache clean --force
-WORKDIR /home/frontend/
+WORKDIR /home/frontend
 RUN npm install

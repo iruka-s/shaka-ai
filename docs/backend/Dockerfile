@@ -1,13 +1,5 @@
 FROM ubuntu:18.04
 
-# プロキシ関連環境変数
-# プロキシのない環境下ではコメントアウト
-ENV http_proxy=http://192.168.10.105:8080
-ENV https_proxy=http://192.168.10.105:8080
-ENV HTTP_PROXY=http://192.168.10.105:8080
-ENV HTTPS_PROXY=http://192.168.10.105:8080
-ENV no_proxy=alsok.sken
-
 # tzdata対策環境変数
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -108,4 +100,4 @@ WORKDIR /resource
 ADD pos-id.def .
 RUN mv /tmp/zen_aku_dict.json .
 
-WORKDIR /home
+WORKDIR /home/
