@@ -5,6 +5,7 @@
 
 ## アプリについて
 以下の機能からなる。
+<br>
 
 ### 【mecabによる構文解析、形態素解析】
 構文解析ツールmecabにより、日本語文を単語ごとに分け、単語ごとの形態素を取得する。
@@ -15,7 +16,7 @@
     勉強 : 名詞,サ変接続,*,*,*,*,勉強,ベンキョウ,ベンキョー
     し : 動詞,自立,*,*,サ変・スル,連用形,する,シ,シ
     た : 助動詞,*,*,*,特殊・タ,基本形,た,タ,タ
-
+<br>
 
 ### 【CaboChaによる係受関係の取得】
 CaboChaにより、文節ごとの係受け関係を取得できる。
@@ -25,7 +26,7 @@ CaboChaにより、文節ごとの係受け関係を取得できる。
     兄は---D
         仲が-D
         良い
-
+<br>
 
 ### 【fasttextによる善悪辞書の作成】
 wikipediaのダンプデータからfasttextの学習モデルを作成。  
@@ -35,7 +36,8 @@ wikipediaのダンプデータからfasttextの学習モデルを作成。
 
 7つの美徳、7つの大罪の語句に類似する単語をfasttextで取得し、  
 類似度に応じて点数付。取得できた単語リストを善悪辞書として扱う。
-    
+<br><br>
+
 
 ### 【入力された文を善悪辞書を用いて点数付】
 入力分をCabocha、mecabを用いて単語に分ける。
@@ -45,7 +47,8 @@ wikipediaのダンプデータからfasttextの学習モデルを作成。
 
 品詞IDの種類については次のURLを参照のこと。  
 https://taku910.github.io/mecab/posid.html
-    
+<br><br>
+
 
 ### 【否定の助動詞に係受関係にある文節の点数の正負を反転】
 次の例のように否定の意味を持つ助動詞がある場合、善悪の意味が逆になる。
@@ -59,32 +62,80 @@ https://taku910.github.io/mecab/posid.html
     。 : 記号,句点,*,*,*,*,。,。,。
 
 文節内に「なかっ」のような否定の助動詞を含む場合、「さぼらなかった。」という文節、及びその文節の子文節である「私は」の文節の点数の正負を反転させて計算する。
-    
+<br><br>
 
-## Djangoサーバの起動
 
-Dockerコンテナ作成後、下記コマンドを実行する。
+## 環境構築
+本システムは`Windows10`と`Ubuntu18.04`のPCにて動作確認を実施した。<br>
+環境構築をするに当たって`Docker`環境が必要なので、別途導入の上、下記を実行する。<br>
+
+### 【フロントエンド】
+Dockerコンテナ上で起動可能なReact + Material-UI環境を構築する。
+`shaka-ai`フォルダ内でターミナルを開き、下記コマンドを実行する。
+```
+docker build -t shaka-frontend docs/frontend/
+```
+`shaka-frontend`というDockerイメージの作成が確認できれば環境構築成功。
+<br><br>
+
+
+### 【バックエンド】
+Dockerコンテナ上で起動可能なDjango環境を構築する。<br>
+`shaka-ai`フォルダ内でターミナルを開き、下記コマンドを実行する。<br>
+※実行の完了まで5時間前後かかるので注意のこと
+```
+docker build -t shaka-backend docs/backend/
+```
+`shaka-backend`というDockerイメージの作成が確認できれば環境構築成功。
+<br><br>
+
+
+## 各サーバの起動
+前項で作成したDockerイメージからDockerコンテナを作成し、Dockerコンテナ内でサーバを起動する。
+
+### 【フロントエンドサーバ】
+下記コマンドを実行する。
+```
+# Docker on Windows
+docker run -it -v <※適切な絶対パス埋め込み>:/home/ -p 127.0.0.1:3000:3000 shaka-frontend
+
+# Docker19.03 on Ubuntu
+docker run -it -v $(pwd):/home/ -p 127.0.0.1:3000:3000 shaka-frontend
+```
+※Windowsではカレントディレクトリの指定がうまく行かず。`shaka-ai`までの絶対パスを埋め込んで起動する。<br>
+　Cドライブ直下にクローンした例：`docker run -it -v C:\shaka-ai\:/home/ -p 127.0.0.1:3000:3000 shaka-frontend`
+
+実行が正常に完了するとDockerコンテナが作成され、Dockerコンテナ内のシェルに接続される。<br>
+Dockerコンテナのシェル上で下記コマンドを実行することで、Reactサーバが起動できる。
+```
+npm install
+npm start
+```
+<br>
+
+
+### 【バックエンドサーバ】
+
+下記コマンドを実行する。
+```
+# Docker on Windows
+docker run -it -v <※適切な絶対パス埋め込み>:/home/ -p 127.0.0.1:8000:8000 shaka-backend
+
+# Docker19.03 on Ubuntu
+sudo docker run --gpus 1 --privileged --device /dev/snd --group-add audio --net host -e DISPLAY=$DISPLAY -v /tmp/.X11-unix/:/tmp.X11-unix -it -v $(pwd):/home shaka-backend
+```
+※Windowsではカレントディレクトリの指定がうまく行かず。`shaka-ai`までの絶対パスを埋め込んで起動する。<br>
+　Cドライブ直下にクローンした例：`docker run -it -v C:\shaka-ai\:/home/ -p 127.0.0.1:8000:8000 shaka-backend`
+
+実行が正常に完了するとDockerコンテナが作成され、Dockerコンテナ内のシェルに接続される。<br>
+Dockerコンテナのシェル上で下記コマンドを実行することで、Djangoサーバが起動できる。
+
 ```
 python3 manage.py runserver 0.0.0.0:8000
 ```
-
-## Reactサーバの起動
-TODO:write this.  
+<br>
 
 
-## Install
-TODO:write this.  
+## 作者
 
-
-## Contribution
-TODO:write this.  
-
-
-<!-- 
-## Licence
-
-[MIT](https://github.com/tcnksm/tool/blob/master/LICENCE)
-
-## Author
-
-[tcnksm](https://github.com/tcnksm) -->
+[iruka-s](https://github.com/iruka-s)
