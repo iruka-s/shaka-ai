@@ -101,4 +101,4 @@ ADD pos-id.def .
 RUN mv /tmp/zen_aku_dict.json .
 
 RUN ldconfig
-WORKDIR /home/
+WORKDIR /home/backend
