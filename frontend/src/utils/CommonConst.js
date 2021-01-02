@@ -1,7 +1,12 @@
 export const ScreenPath = {
-    MAIN: { path: "/", id: "main", name: "メイン画面" },
+    LOGIN: { path: "/", id: "login", name: "ログイン画面" },
+    MAIN: { path: "/main", id: "main", name: "メイン画面" },
   };
 
-export const getAllMessageURL = 'http://localhost:8000/api/v1/shakas/';
+export const apiURLs = {
+  LOGIN: 'http://localhost:8000/api/v1/rest-auth/login/',
+  LOGOUT: 'http://localhost:8000/api/v1/rest-auth/logout/',
+  GETDBRESULTS: 'http://localhost:8000/api/v1/shakas/get_user_result/',
+  POSTMESSAGE: 'http://localhost:8000/api/v1/shakas/set_point/',
+}
 
-export const postMessageURL = 'http://localhost:8000/api/v1/shakas/set_point/';

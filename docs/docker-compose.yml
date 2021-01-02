@@ -1,0 +1,33 @@
+version: '3'
+services:
+  shaka-backend:
+    build: ./backend
+    # command: python3 src/test.py
+    volumes:
+      - ../:/home
+      - /tmp/.X11-unix/:/tmp.X11-unix
+    privileged: true
+    network_mode: 'host'
+    devices:
+      - /dev/snd
+    environment:
+      - DISPLAY=$DISPLAY
+      - NVIDIA_VISIBLE_DEVICES=all
+    working_dir: /home/backend/
+
+  shaka-frontend:
+    build: ./frontend
+    # command: python3 src/test.py
+    volumes:
+      - ../:/home
+      - /tmp/.X11-unix/:/tmp.X11-unix
+    # privileged: true
+    # network_mode: 'host'
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      # - NODE_ENV=production
+      - DISPLAY=$DISPLAY
+      # - NVIDIA_VISIBLE_DEVICES=all
+    working_dir: /home/frontend/
+    stdin_open: true

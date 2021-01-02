@@ -14,13 +14,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.conf.urls import include, url
+from django.urls import include, path
 from django.conf import settings
 from django.contrib.staticfiles.urls import static, staticfiles_urlpatterns
 
 from shakas.urls import router as shaka_router
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^api/v1/', include(shaka_router.urls)),
+    path('admin/', admin.site.urls),
+    path('api/v1/', include(shaka_router.urls)),
+    path('api-auth/', include('rest_framework.urls')),
+    path('api/v1/rest-auth/', include('rest_auth.urls')), # 追加
+    path('api/v1/rest-auth/registration/', include('rest_auth.registration.urls')),
 ]
