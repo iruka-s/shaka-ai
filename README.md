@@ -91,7 +91,12 @@ docker build -t shaka-backend docs/backend/
 
 
 ## 各サーバの起動
-前項で作成したDockerイメージからDockerコンテナを作成し、Dockerコンテナ内でサーバを起動する。
+前項で作成したDockerイメージからDockerコンテナを作成し、Dockerコンテナ内でサーバを起動する。<br>
+サーバー起動後、Webブラウザで```http://localhost:3000/```にアクセスする。<br>
+ログイン時、ユーザー登録機能は未実装であるため、登録済みの下記テストユーザーを使用する。<br>
+- ユーザー名：test
+- メールアドレス：test@gmail.com
+- パスワード：test00
 
 ### 【フロントエンドサーバ】
 下記コマンドを実行する。
